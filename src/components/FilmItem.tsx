@@ -1,12 +1,14 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Film } from "../types/film.type";
 
-const FilmItem = ({ film }: {
-  film: Film
+const FilmItem = ({ film, onPress }: {
+  film: Film, onPress: Function
 }) => {
   return (
-    <View style={styles.main_container}>
+    <TouchableOpacity
+      style={styles.main_container}
+      onPress={() => onPress(film.id)}>
       <Image
         style={styles.image}
         source={{ uri: film.imageUrl }}
@@ -23,7 +25,7 @@ const FilmItem = ({ film }: {
           <Text style={styles.date_text}>{film.release_date}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

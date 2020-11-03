@@ -10,7 +10,7 @@ import { getFilmsFromApiWithSearchedText, getImageFromApi } from '../api/TMDB';
 import { Film } from '../types/film.type';
 import FilmItem from './FilmItem'
 
-export class Search extends React.Component<{}, { films: Film[], isLoading: boolean }> {
+export class Search extends React.Component<{ navigation: any }, { films: Film[], isLoading: boolean }> {
   private searchedText?: string;
   private page = 0;
   private totalPages = 0;
@@ -20,6 +20,11 @@ export class Search extends React.Component<{}, { films: Film[], isLoading: bool
 
     this.state = { films: [], isLoading: false }
 
+  }
+
+  private displayDetailForFilm = (idFilm: number) => {
+    console.log("Display film with id " + idFilm)
+    this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
   }
 
   private searchFilm() {
@@ -67,7 +72,7 @@ export class Search extends React.Component<{}, { films: Film[], isLoading: bool
         <FlatList
           data={this.state.films}
           keyExtractor={(film) => film.id.toString()}
-          renderItem={({ item }) => <FilmItem film={item} />}
+          renderItem={({ item }) => <FilmItem onPress={this.displayDetailForFilm} film={item} />}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
             if (this.page < this.totalPages) {
