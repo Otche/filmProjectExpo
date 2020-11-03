@@ -66,8 +66,8 @@ export class Search extends React.Component<{}, { films: Film[], isLoading: bool
         <Button title='Rechercher' onPress={() => this.searchFilm()} />
         <FlatList
           data={this.state.films}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <FilmItem item={item} />}
+          keyExtractor={(film) => film.id.toString()}
+          renderItem={({ item }) => <FilmItem film={item} />}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
             if (this.page < this.totalPages) {
