@@ -6,7 +6,8 @@ import {
   StyleSheet, View, TextInput,
   Button, FlatList, ActivityIndicator
 } from 'react-native'
-import { getFilmsFromApiWithSearchedText, getImageFromApi } from '../api/TMDB';
+import { getFilmDetailFromApi, getFilmsFromApiWithSearchedText, getImageFromApi } from '../api/TMDB';
+import { films } from '../data/films';
 import { Film } from '../types/film.type';
 import FilmItem from './FilmItem'
 
@@ -22,9 +23,11 @@ export class Search extends React.Component<{ navigation: any }, { films: Film[]
 
   }
 
-  private displayDetailForFilm = (idFilm: number) => {
+  private displayDetailForFilm = async (idFilm: number) => {
     console.log("Display film with id " + idFilm)
-    this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
+    const filmDetail = await getFilmDetailFromApi(idFilm)
+    console.log(filmDetail)
+    this.props.navigation.navigate("FilmDetail", { filmDetail: filmDetail })
   }
 
   private searchFilm() {

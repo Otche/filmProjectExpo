@@ -12,3 +12,9 @@ export function getFilmsFromApiWithSearchedText (text : string,page : number) {
 export function getImageFromApi (name : string) {
   return 'https://image.tmdb.org/t/p/w300' + name
 }
+
+export function getFilmDetailFromApi (id: number) {
+  return fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=' + API_TOKEN + '&language=fr')
+    .then((response) => response.json())
+    .catch((error) => console.error(error));
+}
