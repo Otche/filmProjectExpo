@@ -1,19 +1,20 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, Image, Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
-import { Genre, ProductionCompanie } from '../types/film.type'
+import { Genre, ProductionCompanie } from '../types/film.type';
+import moment from 'moment';
 
 export const FilmDetail = ({ route }: { route: any }) => {
     const { filmDetail } = route.params;
     return (
         <ScrollView style={styles.scrollview_container}>
-            {/*<Image
-          style={styles.image}
-          source={{uri: imageUrl}}
-        />*/}
+            {<Image
+                style={styles.image}
+                source={{ uri: filmDetail.imageUrl }}
+            />}
             <Text style={styles.title_text}>{filmDetail.title}</Text>
             <Text style={styles.description_text}>{filmDetail.overview}</Text>
-            {/*<Text style={styles.default_text}>Sorti le {moment(new Date(filmDetail.release_date)).format('DD/MM/YYYY')}</Text>*/}
+            <Text style={styles.default_text}>Sorti le {moment(new Date(filmDetail.release_date)).format('DD/MM/YYYY')}</Text>
             <Text style={styles.default_text}>Note : {filmDetail.vote_average} / 10</Text>
             <Text style={styles.default_text}>Nombre de votes : {filmDetail.vote_count}</Text>
             {/* <Text style={styles.default_text}>Budget : {numeral(film.budget).format('0,0[.]00 $')}</Text>*/}

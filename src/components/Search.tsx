@@ -25,9 +25,9 @@ export class Search extends React.Component<{ navigation: any }, { films: Film[]
 
   private displayDetailForFilm = async (idFilm: number) => {
     console.log("Display film with id " + idFilm)
-    const filmDetail = await getFilmDetailFromApi(idFilm)
+    const filmDetail = await getFilmDetailFromApi(idFilm);
     console.log(filmDetail)
-    this.props.navigation.navigate("FilmDetail", { filmDetail: filmDetail })
+    this.props.navigation.navigate("FilmDetail", { filmDetail: { imageUrl: getImageFromApi(filmDetail.poster_path), ...filmDetail } })
   }
 
   private searchFilm() {

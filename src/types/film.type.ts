@@ -55,6 +55,5 @@ export type FilmDetailType = {
     title: string, 
     video: boolean, 
     vote_average: number, 
-    vote_count: number,
-    imageUrl : any
+    vote_count: number
 }
