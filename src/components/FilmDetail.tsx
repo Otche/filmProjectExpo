@@ -3,6 +3,7 @@ import { StyleSheet, Image, Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Genre, ProductionCompanie } from '../types/film.type';
 import moment from 'moment';
+const numeral = require('numeral');
 
 export const FilmDetail = ({ route }: { route: any }) => {
     const { filmDetail } = route.params;
@@ -17,7 +18,7 @@ export const FilmDetail = ({ route }: { route: any }) => {
             <Text style={styles.default_text}>Sorti le {moment(new Date(filmDetail.release_date)).format('DD/MM/YYYY')}</Text>
             <Text style={styles.default_text}>Note : {filmDetail.vote_average} / 10</Text>
             <Text style={styles.default_text}>Nombre de votes : {filmDetail.vote_count}</Text>
-            {/* <Text style={styles.default_text}>Budget : {numeral(film.budget).format('0,0[.]00 $')}</Text>*/}
+            <Text style={styles.default_text}>Budget : {numeral(filmDetail.budget).format('0,0[.]00 $')}</Text>
             <Text style={styles.default_text}>Genre(s) : {filmDetail.genres.map(function (genre: Genre) {
                 return genre.name;
             }).join(" / ")}
