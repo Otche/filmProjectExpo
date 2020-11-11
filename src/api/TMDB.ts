@@ -14,7 +14,7 @@ export function getImageFromApi (name : string) {
 }
 
 export function getFilmDetailFromApi (id: number) {
-  return fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=' + API_TOKEN + '&language=fr')
+  return fetch('https://api.themoviedb.org/3/movie/' + id + '?language=fr&api_key=' + API_TOKEN )
     .then((response) => response.json())
     .catch((error) => console.error(error));
 }

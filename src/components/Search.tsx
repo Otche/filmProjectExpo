@@ -6,8 +6,10 @@ import {
   StyleSheet, View, TextInput,
   Button, FlatList, ActivityIndicator
 } from 'react-native'
+import { connect } from 'react-redux';
 import { getFilmDetailFromApi, getFilmsFromApiWithSearchedText, getImageFromApi } from '../api/TMDB';
 import { films } from '../data/films';
+import { FilmAppStore } from '../redux/reducers/favoriteReducer';
 import { Film } from '../types/film.type';
 import FilmItem from './FilmItem'
 
@@ -65,7 +67,6 @@ export class Search extends React.Component<{ navigation: any }, { films: Film[]
 
   render() {
     console.log("RENDER");
-    console.log(this.state.isLoading);
     return (
       <View style={styles.main_container}>
         <TextInput style={styles.textinput} placeholder='Titre du film'
@@ -117,6 +118,12 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Search
+const mapStateToProps = (state: FilmAppStore) => {
+  return {
+    favoritesFilm: state.favoritesFilm
+  }
+}
 
-/**/
+
+export default connect(mapStateToProps)(Search);
+

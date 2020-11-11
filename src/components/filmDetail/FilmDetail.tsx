@@ -1,12 +1,33 @@
 import React from 'react'
-import { StyleSheet, Image, Text } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler';
-import { Genre, ProductionCompanie } from '../types/film.type';
+import { StyleSheet, Image, Text, Button } from 'react-native'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { Genre, ProductionCompanie } from '../../types/film.type';
 import moment from 'moment';
+import { FilmAppStore } from '../../redux/reducers/favoriteReducer';
+import { connect } from 'react-redux';
 const numeral = require('numeral');
+const sourceImageBorder = require('./images/ic_favorite_border.png')
+const sourceImage = require('./images/ic_favorite.png')
+export const FilmDetail = ({ route, dispatch, favoritesFilm }: { route: any, dispatch: any, favoritesFilm: any }) => {
+    const { filmDetail, isFavorite } = route.params;
 
-export const FilmDetail = ({ route }: { route: any }) => {
-    const { filmDetail } = route.params;
+    const toggleFavorite = () => {
+        const action = { type: "TOGGLE_FAVORITE", value: filmDetail }
+        dispatch(action);
+    }
+
+
+    const displayFavoriteImage = () => {
+        const isFavorite = favoritesFilm.findIndex((item: any) => item.id === filmDetail.id) !== -1;
+        return (
+            <Image
+                style={styles.favorite_image}
+                source={isFavorite ? sourceImage : sourceImageBorder}
+            />
+        )
+    }
+
+
     return (
         <ScrollView style={styles.scrollview_container}>
             {<Image
@@ -14,6 +35,11 @@ export const FilmDetail = ({ route }: { route: any }) => {
                 source={{ uri: filmDetail.imageUrl }}
             />}
             <Text style={styles.title_text}>{filmDetail.title}</Text>
+            <TouchableOpacity
+                style={styles.favorite_container}
+                onPress={() => toggleFavorite()}>
+                {displayFavoriteImage()}
+            </TouchableOpacity>
             <Text style={styles.description_text}>{filmDetail.overview}</Text>
             <Text style={styles.default_text}>Sorti le {moment(new Date(filmDetail.release_date)).format('DD/MM/YYYY')}</Text>
             <Text style={styles.default_text}>Note : {filmDetail.vote_average} / 10</Text>
@@ -73,7 +99,21 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         marginTop: 5,
+    }, favorite_image: {
+        width: 40,
+        height: 40
+    },
+    favorite_container: {
+        alignItems: 'center', // Alignement des components enfants sur l'axe secondaire, X ici
     }
 })
 
-export default FilmDetail
+const mapStateToProps = (state: FilmAppStore) => {
+    return {
+        favoritesFilm: state.favoritesFilm,
+    }
+}
+
+
+
+export default connect(mapStateToProps)(FilmDetail);
