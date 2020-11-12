@@ -1,20 +1,39 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Image, StyleSheet, Text, View, TouchableOpacity, GestureResponderEvent } from 'react-native'
 import { Film } from "../types/film.type";
+const sourceImageBorder = require('./images/ic_favorite_border.png');
+const sourceImage = require('./images/ic_favorite.png');
 
-const FilmItem = ({ film, onPress }: {
-  film: Film, onPress: Function
+const FilmItem = ({ film, isFavorite, toggleFavorite, onPress }: {
+  film: Film, isFavorite: boolean, toggleFavorite: Function, onPress: Function
 }) => {
+  const displayFavoriteImage = () => {
+    return (
+      <Image
+        style={styles.favorite_image}
+        source={isFavorite ? sourceImage : sourceImageBorder}
+      />
+    )
+  }
   return (
     <TouchableOpacity
       style={styles.main_container}
-      onPress={() => onPress(film.id)}>
+      onPress={() => onPress(film.id)}
+    >
       <Image
         style={styles.image}
         source={{ uri: film.imageUrl }}
       />
       <View style={styles.content_container}>
         <View style={styles.header_container}>
+          <TouchableOpacity
+            onPress={(event: GestureResponderEvent) => {
+              event.preventDefault(); // Let's stop this event.
+              event.stopPropagation(); // Really this time.
+              toggleFavorite(film.id)
+            }}>
+            {displayFavoriteImage()}
+          </TouchableOpacity>
           <Text style={styles.title_text}>{film.title}</Text>
           <Text style={styles.vote_text}>{film.vote_average}</Text>
         </View>
@@ -73,6 +92,9 @@ const styles = StyleSheet.create({
   date_text: {
     textAlign: 'right',
     fontSize: 14
+  }, favorite_image: {
+    width: 25,
+    height: 25
   }
 })
 

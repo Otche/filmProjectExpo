@@ -13,7 +13,7 @@ import { FilmAppStore } from '../redux/reducers/favoriteReducer';
 import { Film } from '../types/film.type';
 import FilmItem from './FilmItem'
 
-export class Search extends React.Component<{ navigation: any }, { films: Film[], isLoading: boolean }> {
+export class Search extends React.Component<{ navigation: any, favoritesFilm: any, dispatch: any }, { films: Film[], isLoading: boolean }> {
   private searchedText?: string;
   private page = 0;
   private totalPages = 0;
@@ -26,9 +26,7 @@ export class Search extends React.Component<{ navigation: any }, { films: Film[]
   }
 
   private displayDetailForFilm = async (idFilm: number) => {
-    console.log("Display film with id " + idFilm)
     const filmDetail = await getFilmDetailFromApi(idFilm);
-    console.log(filmDetail)
     this.props.navigation.navigate("FilmDetail", { filmDetail: { imageUrl: getImageFromApi(filmDetail.poster_path), ...filmDetail } })
   }
 
@@ -65,8 +63,15 @@ export class Search extends React.Component<{ navigation: any }, { films: Film[]
     this.searchedText = text
   }
 
+  private async toggleFavorite(idFilm: number) {
+    const action = { type: "TOGGLE_FAVORITE", value: await getFilmDetailFromApi(idFilm) }
+    this.props.dispatch(action);
+  }
+
+
   render() {
     console.log("RENDER");
+    console.log(this.props.favoritesFilm)
     return (
       <View style={styles.main_container}>
         <TextInput style={styles.textinput} placeholder='Titre du film'
@@ -76,7 +81,13 @@ export class Search extends React.Component<{ navigation: any }, { films: Film[]
         <FlatList
           data={this.state.films}
           keyExtractor={(film) => film.id.toString()}
-          renderItem={({ item }) => <FilmItem onPress={this.displayDetailForFilm} film={item} />}
+          renderItem={({ item }) => {
+            return (<FilmItem isFavorite={this.props.favoritesFilm.findIndex((filmDetail: any) => item.id === filmDetail.id) !== -1}
+              toggleFavorite={this.toggleFavorite.bind(this)}
+              onPress={this.displayDetailForFilm}
+              film={item} />)
+          }}
+          extraData={this.props.favoritesFilm}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
             if (this.page < this.totalPages) {

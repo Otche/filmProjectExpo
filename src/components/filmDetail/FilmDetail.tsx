@@ -6,10 +6,11 @@ import moment from 'moment';
 import { FilmAppStore } from '../../redux/reducers/favoriteReducer';
 import { connect } from 'react-redux';
 const numeral = require('numeral');
-const sourceImageBorder = require('./images/ic_favorite_border.png')
-const sourceImage = require('./images/ic_favorite.png')
+const sourceImageBorder = require('../images/ic_favorite_border.png');
+const sourceImage = require('../images/ic_favorite.png');
+
 export const FilmDetail = ({ route, dispatch, favoritesFilm }: { route: any, dispatch: any, favoritesFilm: any }) => {
-    const { filmDetail, isFavorite } = route.params;
+    const { filmDetail } = route.params;
 
     const toggleFavorite = () => {
         const action = { type: "TOGGLE_FAVORITE", value: filmDetail }
