@@ -71,7 +71,6 @@ export class Search extends React.Component<{ navigation: any, favoritesFilm: an
 
   render() {
     console.log("RENDER");
-    console.log(this.props.favoritesFilm)
     return (
       <View style={styles.main_container}>
         <TextInput style={styles.textinput} placeholder='Titre du film'
