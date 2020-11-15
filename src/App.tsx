@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import React from "react";
 import Search from "./components/Search";
+import { StyleSheet, Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -29,10 +30,31 @@ export default function App() {
     <Provider store={Store}>
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="Films" options={{ title: 'Films' }} component={Navigation} />
-          <Tab.Screen name="Favoris" options={{ title: 'Favoris' }} component={Favorites} />
+          <Tab.Screen name="Films" options={{
+            title: 'Film',
+            tabBarIcon: () => {
+              return <Image
+                source={require('./assets/ic_search.png')}
+                style={styles.icon} />
+            }
+          }} component={Navigation} />
+          <Tab.Screen name="Favoris" options={{
+            title: 'Favoris',
+            tabBarIcon: () => {
+              return <Image
+                source={require('./assets/ic_favorite.png')}
+                style={styles.icon} />
+            }
+          }} component={Favorites} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 30,
+    height: 30
+  }
+})

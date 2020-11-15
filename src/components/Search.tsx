@@ -1,6 +1,3 @@
-
-// Components/Search.js
-
 import React from 'react'
 import {
   StyleSheet, View, TextInput,
@@ -8,7 +5,6 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux';
 import { getFilmDetailFromApi, getFilmsFromApiWithSearchedText, getImageFromApi } from '../api/TMDB';
-import { films } from '../data/films';
 import { FilmAppStore } from '../redux/reducers/favoriteReducer';
 import { Film } from '../types/film.type';
 import FilmItem from './FilmItem'

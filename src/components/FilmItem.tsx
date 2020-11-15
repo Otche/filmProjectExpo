@@ -1,8 +1,8 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View, TouchableOpacity, GestureResponderEvent } from 'react-native'
 import { Film } from "../types/film.type";
-const sourceImageBorder = require('./images/ic_favorite_border.png');
-const sourceImage = require('./images/ic_favorite.png');
+const sourceImageBorder = require('./assets/ic_favorite_border.png');
+const sourceImage = require('./assets/ic_favorite.png');
 
 const FilmItem = ({ film, isFavorite, toggleFavorite, onPress }: {
   film: Film, isFavorite: boolean, toggleFavorite: Function, onPress: Function

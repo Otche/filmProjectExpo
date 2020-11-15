@@ -1,13 +1,13 @@
 import React from 'react'
-import { StyleSheet, Image, Text, Button } from 'react-native'
+import { StyleSheet, Image, Text } from 'react-native'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Genre, ProductionCompanie } from '../../types/film.type';
 import moment from 'moment';
 import { FilmAppStore } from '../../redux/reducers/favoriteReducer';
 import { connect } from 'react-redux';
 const numeral = require('numeral');
-const sourceImageBorder = require('../images/ic_favorite_border.png');
-const sourceImage = require('../images/ic_favorite.png');
+const sourceImageBorder = require('../assets/ic_favorite_border.png');
+const sourceImage = require('../assets/ic_favorite.png');
 
 export const FilmDetail = ({ route, dispatch, favoritesFilm }: { route: any, dispatch: any, favoritesFilm: any }) => {
     const { filmDetail } = route.params;
