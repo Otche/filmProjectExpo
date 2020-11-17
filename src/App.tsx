@@ -12,12 +12,23 @@ import Favorites from './components/Favorites';
 
 const Stack = createStackNavigator();
 
-function Navigation() {
+function SearchNavigation() {
   return (
     <Stack.Navigator initialRouteName="Search">
       <Stack.Screen name="Search"
         options={{ title: 'Recherche' }} component={Search} />
       <Stack.Screen name="FilmDetail"
+        options={{ title: 'Detail du film' }} component={FilmDetail} />
+    </Stack.Navigator>
+  );
+}
+
+function FavoritesNavigation() {
+  return (
+    <Stack.Navigator initialRouteName="Search">
+      <Stack.Screen name="Search"
+        options={{ title: 'Recherche' }} component={Favorites} />
+      <Stack.Screen name="FavoriteFilmDetail"
         options={{ title: 'Detail du film' }} component={FilmDetail} />
     </Stack.Navigator>
   );
@@ -37,7 +48,7 @@ export default function App() {
                 source={require('./assets/ic_search.png')}
                 style={styles.icon} />
             }
-          }} component={Navigation} />
+          }} component={SearchNavigation} />
           <Tab.Screen name="Favoris" options={{
             title: 'Favoris',
             tabBarIcon: () => {
@@ -45,7 +56,7 @@ export default function App() {
                 source={require('./assets/ic_favorite.png')}
                 style={styles.icon} />
             }
-          }} component={Favorites} />
+          }} component={FavoritesNavigation} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

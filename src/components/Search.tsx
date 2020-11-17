@@ -2,13 +2,13 @@
 import React from 'react'
 import {
   StyleSheet, View, TextInput,
-  Button, FlatList, ActivityIndicator
+  Button, ActivityIndicator
 } from 'react-native'
 import { connect } from 'react-redux';
 import { getFilmDetailFromApi, getFilmsFromApiWithSearchedText, getImageFromApi } from '../api/TMDB';
 import { FilmAppStore } from '../redux/reducers/favoriteReducer';
 import { Film } from '../types/film.type';
-import FilmItem from './FilmItem'
+import FilmList from './FilmList';
 
 export class Search extends React.Component<{ navigation: any, favoritesFilm: any, dispatch: any }, { films: Film[], isLoading: boolean }> {
   private searchedText?: string;
@@ -74,22 +74,20 @@ export class Search extends React.Component<{ navigation: any, favoritesFilm: an
           onChangeText={(text) => this.searchTextInputChanged(text)}
           onSubmitEditing={() => this.loadFilms()} />
         <Button title='Rechercher' onPress={() => this.searchFilm()} />
-        <FlatList
-          data={this.state.films}
-          keyExtractor={(film) => film.id.toString()}
-          renderItem={({ item }) => {
-            return (<FilmItem isFavorite={this.props.favoritesFilm.findIndex((filmDetail: any) => item.id === filmDetail.id) !== -1}
-              toggleFavorite={this.toggleFavorite.bind(this)}
-              onPress={this.displayDetailForFilm}
-              film={item} />)
-          }}
-          extraData={this.props.favoritesFilm}
-          onEndReachedThreshold={0.5}
-          onEndReached={() => {
-            if (this.page < this.totalPages) {
-              this.loadFilms()
+        <FilmList
+          films={this.state.films.map(
+            item => {
+              return {
+                isFavorite: this.props.favoritesFilm.findIndex((filmDetail: any) => item.id === filmDetail.id) !== -1,
+                ...item
+              }
             }
-          }}
+          )}
+          displayDetailForFilm={this.displayDetailForFilm}
+          toggleFavorite={this.toggleFavorite.bind(this)}
+          loadFilms={this.loadFilms}
+          page={this.page}
+          totalPages={this.totalPages}
         />
         { this.state.isLoading ?
           <View style={styles.loading_container}>
